@@ -23,6 +23,7 @@ public class Score {
         this.kor = dto.getKor();
         this.eng = dto.getEng();
         this.math = dto.getMath();
+        this.stuNum = dto.getStuNum();
         calcTotalAndAvg(); // 총점, 평균 계산
         calcGrade(); // 학점 계산
     }

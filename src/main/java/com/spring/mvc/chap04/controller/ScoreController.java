@@ -2,19 +2,21 @@ package com.spring.mvc.chap04.controller;
 
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
-import com.spring.mvc.chap04.repository.ScoreRepositoryImpl;
 import com.spring.mvc.chap04.repository.ScoreRepositoty;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Comparator.comparing;
+
 
 /*
     # 요청 URL
@@ -45,10 +47,13 @@ public class ScoreController {
 
     // 1. 성적 등록 화면 띄우기 + 정보 목록 조회
     @GetMapping("/list")
-    public String list(Model model) {
+    public String list(@RequestParam(defaultValue = "num") String sort, Model model) {
         System.out.println("/score/list : GET!");
-        List<Score> scoreList = repository.findAll();
+        System.out.println("정렬 요구사항: " + sort);
+
+        List<Score> scoreList = repository.findAll(sort);
         model.addAttribute("sList", scoreList);
+
         return "chap04/score-list";
     }
 
@@ -77,16 +82,51 @@ public class ScoreController {
     }
 
     // 3. 성적 정보 삭제 요청
-    @PostMapping("/remove")
-    public String remove() {
-        System.out.println("/score/remove : POST!");
-        return "";
+    @GetMapping("/remove")
+    public String remove(int stuNum) { // @RequestParam 생략
+        System.out.println("/score/remove : GET!");
+
+        repository.deleteByStuNum(stuNum);
+
+        return "redirect:/score/list";
     }
     
     // 4. 성적 정보 상세 조회 요청
     @GetMapping("/detail")
-    public String detail() {
+    public String detail(int stuNum, Model model) {
         System.out.println("/score/detail : GET!");
-        return "";
+
+//        Score score = new Score(dto)
+        Score score = repository.findByStuNum(stuNum);
+        model.addAttribute("stu", score);
+
+        return "chap04/score-result";
     }
+
+    // 5. 성적 정보 수정 요청
+    @GetMapping("/modify")
+    public String modify(int stuNum, Model model) {
+        System.out.println("/score/modify : GET!");
+
+        // 수정할 학생의 정보 보내기
+        Score score = repository.findByStuNum(stuNum);
+        model.addAttribute("s", score);
+
+        return "chap04/score-modify";
+    }
+
+    @PostMapping("/modify")
+    public String modifySuccess(ScoreRequestDTO dto, Model model) {
+        System.out.println("/score/modify : POST!" + dto);
+
+        Score score = repository.findByStuNum(dto.getStuNum());
+        score.setKor(dto.getKor());
+        score.setMath(dto.getMath());
+        score.setEng(dto.getEng());
+
+        model.addAttribute("stu", score);
+
+        return "chap04/score-result";
+    }
+
 }

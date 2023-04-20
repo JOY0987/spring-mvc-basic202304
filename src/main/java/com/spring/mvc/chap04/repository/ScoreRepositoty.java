@@ -1,7 +1,9 @@
 package com.spring.mvc.chap04.repository;
 
+import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 
+import java.util.Comparator;
 import java.util.List;
 
 // 역할 명세 (추상화):
@@ -11,7 +13,12 @@ import java.util.List;
 public interface ScoreRepositoty {
     
     // 성적 정보 전체 목록 조회 명세화
-    List<Score> findAll();
+    List<Score> findAll(); // 일반 목록조회
+    default List<Score> findAll(String sort) {
+        return null;
+    };  // 정렬 목록조회
+        // => 인터페이스 구현 이후 추가하는 메서드이므로, 오버라이딩이 강제되지 않도록 합니다. (default + {})
+    
 
     // 성적 정보 등록
     boolean save(Score score);
@@ -21,4 +28,7 @@ public interface ScoreRepositoty {
     
     // 성적 정보 개별 조회
     Score findByStuNum(int stuNum);
+
+    boolean update(int stuNum, ScoreRequestDTO dto);
+
 }
