@@ -30,15 +30,7 @@ public class BoardController {
         return "chap05/list";
     }
 
-    // 2. 글 클릭시 게시글 상세 조회
-//    @GetMapping()
-//    public String detail(BoardListResponseDTO dto, Model model) {
-//        System.out.println("card 상세보기 : GET 요청");
-//
-//        return "chap05/detail";
-//    }
-
-    // 3. 새 글 쓰기
+    // 2. 새 글 쓰기
     // 새 글 작성하는 창 띄우기
     @GetMapping("/write")
     public String write() {
@@ -52,18 +44,22 @@ public class BoardController {
         return "redirect:/board/list";
     }
 
-    // 4. 글 삭제하기
+    // 3. 글 삭제하기
     @GetMapping("/delete")
     public String delete(int bno) {
         boardService.delete(bno);
         return "redirect:/board/list";
     }
 
-    // 5. 상세정보 조회 요청
+    // 4. 상세정보 조회 요청
     @GetMapping("/detail")
     public String detail(int bno, Model model) {
         BoardDetailResponseDTO board = boardService.detail(bno);
         model.addAttribute("b", board);
         return "chap05/detail";
     }
+
+    // TODO : 글 수정기능 만들기
+    // TODO : 글 따봉기능 만들기
+    // TODO : 댓글기능 만들어보기..도ㅣ면...
 }
