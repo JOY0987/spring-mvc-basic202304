@@ -1,21 +1,21 @@
 package com.spring.mvc.chap04.controller;
 
+import com.spring.mvc.chap04.dto.ScoreListResponseDTO;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import com.spring.mvc.chap04.repository.ScoreRepositoty;
+import com.spring.mvc.chap04.service.ScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Comparator;
 import java.util.List;
-
-import static java.util.Comparator.comparing;
+import java.util.stream.Collectors;
 
 
 /*
@@ -32,14 +32,15 @@ import static java.util.Comparator.comparing;
 @Controller
 @RequestMapping("/score")
 //@AllArgsConstructor : 모든 필드를 초기화하는 생성자 // 자동 @Autowired
-@RequiredArgsConstructor // : final 필드만 초기화하는 생성자
+@RequiredArgsConstructor // : final 필드만 초기화하는 생성자!!
 public class ScoreController {
 
     // 저장소에 의존해야 데이터를 받아서 클라이언트에게 응답할 수 있음
-    private final ScoreRepositoty repository;
+    private final ScoreService scoreService;
 
     // 만약에 클래스의 생성자가 단 1개라면
     // 스프링이 자동으로 @Autowired 를 써줌
+
 //    @Autowired
 //    public ScoreController(ScoreRepositoryImpl repository) {
 //        this.repository = repository;
@@ -51,8 +52,9 @@ public class ScoreController {
         System.out.println("/score/list : GET!");
         System.out.println("정렬 요구사항: " + sort);
 
-        List<Score> scoreList = repository.findAll(sort);
-        model.addAttribute("sList", scoreList);
+        List<ScoreListResponseDTO> responseDTOList = scoreService.getList(sort);
+
+        model.addAttribute("sList", responseDTOList);
 
         return "chap04/score-list";
     }
@@ -64,11 +66,7 @@ public class ScoreController {
         // 입력 데이터 (쿼리스트링) 읽기
         System.out.println("/score/register : POST!" + dto);
 
-        // dto(ScoreDTO) 를 entity(Score) 로 변환해야 함.
-        Score score = new Score(dto);
-
-        // save 명령
-        repository.save(score);
+        scoreService.insertScore(dto);
 
         /*
             등록 요청에서 JSP 뷰 포워딩을 하면
@@ -86,21 +84,27 @@ public class ScoreController {
     public String remove(int stuNum) { // @RequestParam 생략
         System.out.println("/score/remove : GET!");
 
-        repository.deleteByStuNum(stuNum);
+        scoreService.delete(stuNum);
 
         return "redirect:/score/list";
     }
     
     // 4. 성적 정보 상세 조회 요청
     @GetMapping("/detail")
-    public String detail(int stuNum, Model model) {
+    public String detail(
+            @RequestParam(required = true) int stuNum // 필수 파라미터로 설정
+            , Model model
+    ) {
         System.out.println("/score/detail : GET!");
 
-//        Score score = new Score(dto)
-        Score score = repository.findByStuNum(stuNum);
-        model.addAttribute("stu", score);
+        retrieve(stuNum, model);
 
-        return "chap04/score-result";
+        return "chap04/score-detail";
+    }
+
+    private void retrieve(int stuNum, Model model) {
+        Score score = scoreService.retrieve(stuNum);
+        model.addAttribute("s", score);
     }
 
     // 5. 성적 정보 수정 요청
@@ -109,24 +113,25 @@ public class ScoreController {
         System.out.println("/score/modify : GET!");
 
         // 수정할 학생의 정보 보내기
-        Score score = repository.findByStuNum(stuNum);
-        model.addAttribute("s", score);
+        retrieve(stuNum, model);
 
         return "chap04/score-modify";
     }
 
+    // 6. 수정 완료 처리하기
     @PostMapping("/modify")
-    public String modifySuccess(ScoreRequestDTO dto, Model model) {
-        System.out.println("/score/modify : POST!" + dto);
+    public String modifySuccess(int stuNum, ScoreRequestDTO dto) {
+        System.out.println("/score/modify : POST!");
 
-        Score score = repository.findByStuNum(dto.getStuNum());
-        score.setKor(dto.getKor());
-        score.setMath(dto.getMath());
-        score.setEng(dto.getEng());
+        Score score = scoreService.retrieve(stuNum);
+//        score.setKor(dto.getKor());
+//        score.setMath(dto.getMath());
+//        score.setEng(dto.getEng());
 
-        model.addAttribute("stu", score);
+        score.changeScore(dto);
 
-        return "chap04/score-result";
+        return "redirect:/score/detail?stuNum=" + stuNum;
     }
+
 
 }

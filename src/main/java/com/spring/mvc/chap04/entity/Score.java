@@ -20,12 +20,7 @@ public class Score {
 
     public Score(ScoreRequestDTO dto) {
         this.name = dto.getName();
-        this.kor = dto.getKor();
-        this.eng = dto.getEng();
-        this.math = dto.getMath();
-        this.stuNum = dto.getStuNum();
-        calcTotalAndAvg(); // 총점, 평균 계산
-        calcGrade(); // 학점 계산
+        changeScore(dto); // 학점 계산
     }
 
     private void calcGrade() {
@@ -39,5 +34,14 @@ public class Score {
     private void calcTotalAndAvg() {
         this.total = kor + eng + math;
         this.average = total / 3.0;
+    }
+
+    // modify 를 위한 캡슐화 - 순서를 정해두고, 메서드 하나로 코드를 줄인다.
+    public void changeScore(ScoreRequestDTO dto) {
+        this.kor = dto.getKor();
+        this.eng = dto.getEng();
+        this.math = dto.getMath();
+        calcTotalAndAvg(); // 총점, 평균 계산
+        calcGrade();
     }
 }

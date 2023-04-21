@@ -14,6 +14,7 @@
     <!-- bootstrap css -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+
     <!-- bootstrap js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
 
@@ -28,7 +29,6 @@
             padding: 0;
             font-size: 1.4em;
         }
-
         section.score-main {
             width: 30%;
             margin: 0 auto 150px;
@@ -38,17 +38,25 @@
             box-shadow: 2px 2px 5px orangered;
             transform: translateY(200px);
         }
-
-        a.list-btn {
+        a {
             display: block;
             width: fit-content;
             text-decoration: none;
-            background: rgb(83, 189, 83);
-            color: white;
-            box-shadow: 1px 1px 2px rgb(146, 228, 146);
             border-radius: 5px;
             border: 1px solid white;
             padding: 5px;
+            margin-right: 10px;
+        }
+        a.list-btn {
+            background: rgb(83, 189, 83);
+            color: white;
+            box-shadow: 1px 1px 2px rgb(146, 228, 146);
+        }
+        a.mod-btn {
+            background: rgb(228, 248, 49);
+            color: #333;
+            box-shadow: 1px 1px 2px rgb(250, 240, 105);
+            border-radius: 5px;
         }
     </style>
 
@@ -58,24 +66,42 @@
 
 <div class="wrap">
     <section class="score-main">
-        <h1>${s.name}님 성적 정보 수정하기~</h1>
-        <form action="/score/modify" method="post">
-            <input type="hidden" name="stuNum" value="${s.stuNum}">
-<%--            주소로 데이터를 넘길 수 없으므로 input hidden 으로 넘긴다 --%>
-            <ul>
-                <li># 국어: <input type="text" name="kor" value="${s.kor}"></li>
-                <li># 영어: <input type="text" name="eng" value="${s.eng}"></li>
-                <li># 수학: <input type="text" name="math" value="${s.math}"></li>
-            </ul>
-            <div class="btn-group">
-                <button type="submit">수정완료</button>
-                <button type="button" onclick="history.back()">이전으로</button>
-<%--                post 형식 form 에는 actin에 ?name= 형태를 쓸 수 없음 --%>
-            </div>
-        </form>
+        <h1>${s.name}님 성적 정보</h1>
+        <ul>
+            <li># 국어: ${s.kor}점</li>
+            <li># 영어: ${s.eng}점</li>
+            <li># 수학: ${s.math}점</li>
+            <li># 총점: ${s.total}점</li>
+            <li># 평균: ${s.average}점</li>
+            <li># 학점: ${s.grade}</li>
+        </ul>
+        <div class="btn-group">
+            <a class="list-btn" href="/score/list">목록</a>
+            <a class="mod-btn" href="/score/modify?stuNum=${s.stuNum}">수정</a>
+        </div>
     </section>
 
 </div>
 </body>
 
 </html>
+
+
+<%--
+<form method="get">
+    <div class="wrap">
+        <h1>${s.name}님 성적 정보</h1>
+        <div class="score-list">
+            <span># 국어: ${s.kor}점</span>
+            <span># 영어: ${s.eng}점</span>
+            <span># 수학: ${s.math}점</span>
+            <span># 총점: ${s.total}점</span>
+            <span># 평균: ${s.average}점</span>
+            <span># 학점: ${s.grade}</span>
+        </div>
+        <input type="hidden" name="stuNum" value="${s.stuNum}">
+        <button type="submit" formaction="/score/list" class="back-list-btn">목록</button>
+        <button type="submit" formaction="/score/modify" class="modify-btn">수정</button>
+    </div>
+</form>
+--%>

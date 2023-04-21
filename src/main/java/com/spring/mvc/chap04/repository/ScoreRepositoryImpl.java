@@ -24,13 +24,14 @@ public class ScoreRepositoryImpl implements ScoreRepositoty { // Impl : 구현�
     private static int sequence;
     static {
         scoreMap = new HashMap<>();
-
-        ScoreRequestDTO dto1 = new ScoreRequestDTO("뽀로로", 100, 50, 70, ++sequence);
-        ScoreRequestDTO dto2 = new ScoreRequestDTO("춘식이", 33, 56, 12, ++sequence);
-        ScoreRequestDTO dto3 = new ScoreRequestDTO("대길이", 88, 12, 0, ++sequence);
-        Score stu1 = new Score(dto1);
-        Score stu2 = new Score(dto2);
-        Score stu3 = new Score(dto3);
+        Score stu1 = new Score(new ScoreRequestDTO("뽀로로", 100, 50, 70));
+        Score stu2 = new Score(new ScoreRequestDTO("춘식이", 33, 56, 12));
+        Score stu3 = new Score(new ScoreRequestDTO("대길이", 88, 12, 0));
+        // 학번 지정
+        stu1.setStuNum(++sequence);
+        stu2.setStuNum(++sequence);
+        stu3.setStuNum(++sequence);
+        // 학번 -> key, 점수 -> value
         scoreMap.put(stu1.getStuNum(), stu1);
         scoreMap.put(stu2.getStuNum(), stu2);
         scoreMap.put(stu3.getStuNum(), stu3);
@@ -63,7 +64,8 @@ public class ScoreRepositoryImpl implements ScoreRepositoty { // Impl : 구현�
         return scoreMap.values()
                 .stream()
                 .sorted(compator)
-                .collect(toList());
+                .collect(toList())
+                ;
     }
 
     @Override
@@ -71,7 +73,7 @@ public class ScoreRepositoryImpl implements ScoreRepositoty { // Impl : 구현�
         if(scoreMap.containsKey(score.getStuNum())) return false;
         score.setStuNum(++sequence);
         scoreMap.put(score.getStuNum(), score);
-        System.out.println(findAll());
+//        System.out.println(findAll());
         return true;
     }
 
@@ -85,11 +87,6 @@ public class ScoreRepositoryImpl implements ScoreRepositoty { // Impl : 구현�
     @Override
     public Score findByStuNum(int stuNum) {
         return scoreMap.get(stuNum);
-    }
-
-    @Override
-    public boolean update(int stuNum, ScoreRequestDTO dto) {
-        return false;
     }
 
 }
