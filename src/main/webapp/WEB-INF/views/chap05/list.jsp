@@ -98,6 +98,11 @@
                 cancelDelete.onclick = e => {
                     modal.style.display = 'none'; // 모달 창 닫기
                 };
+            } else { // 삭제 버튼 이외를 누르면 상세 조회 요청
+                // section 태그에 붙은 글 번호 읽기
+                const bno = e.target.closest('section.card').dataset.bno;
+                // 요청 보내기
+                window.location.href = '/board/detail?bno=' + bno;
             }
         });
         // 전역 이벤트로 모달창 닫기

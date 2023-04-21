@@ -2,15 +2,17 @@
     box-sizing: border-box;
 }
 
+body {
+    background-color: #f0f0f0;
+    font-family: 'Single Day', cursive;
+}
+
 button {
     outline: none;
     border: none;
 }
 
-
-
 #wrap {
     width: 60%;
     margin: 100px auto;
-    font-family: 'Single Day', cursive;
 }

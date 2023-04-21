@@ -1,7 +1,9 @@
 package com.spring.mvc.chap05.controller;
 
+import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
+import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -40,7 +42,6 @@ public class BoardController {
     // 새 글 작성하는 창 띄우기
     @GetMapping("/write")
     public String write() {
-
         return "chap05/write";
     }
 
@@ -56,5 +57,13 @@ public class BoardController {
     public String delete(int bno) {
         boardService.delete(bno);
         return "redirect:/board/list";
+    }
+
+    // 5. 상세정보 조회 요청
+    @GetMapping("/detail")
+    public String detail(int bno, Model model) {
+        BoardDetailResponseDTO board = boardService.detail(bno);
+        model.addAttribute("b", board);
+        return "chap05/detail";
     }
 }

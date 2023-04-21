@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.service;
 
+import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
@@ -27,11 +28,21 @@ public class BoardService {
                 .collect(toList());
     }
 
-    public void register(BoardWriteRequestDTO dto) {
-        boardRepository.save(new Board(dto));
+    // 글 등록 중간 처리
+    public boolean register(BoardWriteRequestDTO dto) {
+        return boardRepository.save(new Board(dto));
     }
 
+    // 글 삭제 중간 처리
     public boolean delete(int boardNo) {
         return boardRepository.deleteByNo(boardNo);
+    }
+
+    // 글 상세조회 중간 처리
+    public BoardDetailResponseDTO detail(int bno) {
+        Board board = boardRepository.findOne(bno);
+        // 조회수 상승 처리
+        board.setViewCount(board.getViewCount() + 1);
+        return new BoardDetailResponseDTO(board);
     }
 }
