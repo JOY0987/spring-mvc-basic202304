@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.entity;
 
+import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,4 +16,17 @@ public class Board {
     private String content; // 내용
     private int viewCount; // 조회수
     private LocalDateTime regDateTime; // 작성일자시간
+
+    public Board(int boardNo, String title, String content) {
+        this.boardNo = boardNo;
+        this.title = title;
+        this.content = content;
+        this.regDateTime = LocalDateTime.now();
+    }
+
+    public Board(BoardWriteRequestDTO dto) {
+        this.title = dto.getTitle();
+        this.content = dto.getContent();
+        this.regDateTime = LocalDateTime.now();
+    }
 }

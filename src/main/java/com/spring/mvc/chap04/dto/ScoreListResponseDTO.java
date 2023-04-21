@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@RequiredArgsConstructor // final 맘ㄴ 골라서 초기화
+@RequiredArgsConstructor // final 만 골라서 초기화
 @Getter @Setter @EqualsAndHashCode
 public class ScoreListResponseDTO {
     
