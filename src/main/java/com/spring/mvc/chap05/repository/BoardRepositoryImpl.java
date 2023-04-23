@@ -1,5 +1,7 @@
 package com.spring.mvc.chap05.repository;
 
+import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
+import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
 import org.springframework.stereotype.Repository;
 
@@ -53,4 +55,5 @@ public class BoardRepositoryImpl implements BoardRepository {
         boardMap.remove(boardNo);
         return true;
     }
+
 }

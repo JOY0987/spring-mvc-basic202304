@@ -29,4 +29,9 @@ public class Board {
         this.content = dto.getContent();
         this.regDateTime = LocalDateTime.now();
     }
+
+    public void modify(BoardWriteRequestDTO dto) {
+        this.setContent(dto.getContent());
+        this.setTitle(dto.getTitle());
+    }
 }

@@ -109,18 +109,19 @@
 
 <body>
 <div id="wrap" class="form-container">
-<%--    <form action="/board/modify" method="post">--%>
-    <h1>${b.boardNo}번 게시물 내용~ </h1>
-    <h2># 작성일자: ${b.date}</h2>
-    <label for="title">제목</label>
-    <input type="text" id="title" name="title" value="${b.title}" readonly>
-    <label for="content">내용</label>
-    <div id="content">${b.content}</div>
-    <div class="buttons">
-        <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
-        <button class="list-btn" type="button" onclick="window.location.href='/board/modify?no=${b.boardNo}'">수정</button>
-    </div>
-<%--    </form>--%>
+    <form action="/board/modify" method="post">
+        <input type="hidden" name="bno" value="${b.boardNo}">
+        <h1>${b.boardNo}번 게시물 내용~ </h1>
+        <h2># 작성일자: ${b.date}</h2>
+        <label for="title">제목</label>
+        <input type="text" id="title" name="title" value="${b.title}">
+        <label for="content">내용</label>
+        <input type="text" id="content" name="content" value="${b.content}">
+        <div class="buttons">
+            <button class="list-btn" type="button" onclick="history.back()">이전으로</button>
+            <button class="list-btn" type="submit">수정완료</button>
+        </div>
+    </form>
 </div>
 </body>
 </html>

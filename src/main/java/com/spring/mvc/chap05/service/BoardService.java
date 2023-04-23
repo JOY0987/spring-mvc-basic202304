@@ -45,4 +45,9 @@ public class BoardService {
         board.setViewCount(board.getViewCount() + 1);
         return new BoardDetailResponseDTO(board);
     }
+
+
+    public Board findOne(int bno) {
+        return boardRepository.findOne(bno);
+    }
 }

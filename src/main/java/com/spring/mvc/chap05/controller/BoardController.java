@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -60,6 +59,24 @@ public class BoardController {
     }
 
     // TODO : 글 수정기능 만들기
+    // 5. 글 수정 기능 만들기
+    // 수정할 수 있는 창으로 접속
+    @GetMapping("/modify")
+    public String modify(int no, Model model) {
+        BoardDetailResponseDTO board = boardService.detail(no);
+        model.addAttribute("b", board);
+        return "chap05/modify";
+    }
+    
+//     수정한 내용을 가지고 detail 로 이동
+    @PostMapping("/modify")
+    public String modify(BoardWriteRequestDTO dto, int bno) {
+        // 수정중인 게시글 찾기
+        Board board = boardService.findOne(bno);
+        // 수정한 내용으로 변경
+        board.modify(dto);
+        return "redirect:/board/detail?bno=" + bno;
+    }
     // TODO : 글 따봉기능 만들기
     // TODO : 댓글기능 만들어보기..도ㅣ면...
 }

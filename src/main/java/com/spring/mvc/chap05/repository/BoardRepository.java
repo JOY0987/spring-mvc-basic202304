@@ -1,5 +1,7 @@
 package com.spring.mvc.chap05.repository;
 
+import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
+import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
 
 import java.util.List;
@@ -17,4 +19,5 @@ public interface BoardRepository {
 
     // 게시물 삭제
     boolean deleteByNo(int boardNo);
+
 }
