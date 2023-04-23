@@ -19,99 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
 
     <link rel="stylesheet" href="/assets/css/main.css">
-
-
-    <style>
-
-
-        .form-container {
-            width: 500px;
-            margin: auto;
-            padding: 20px;
-            background-image: linear-gradient(135deg, #a1c4fd, #fbc2eb);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 4px;
-            font-size: 18px;
-        }
-        .form-container h1 {
-            font-size: 40px;
-            font-weight: 700;
-            letter-spacing: 10px;
-            text-align: center;
-            margin-bottom: 20px;
-            color: #ffffff;
-        }
-        .form-container h2 {
-            font-size: 30px;
-            color: #222;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-size: 20px;
-        }
-        #title{
-            font-size: 18px;
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 2px solid #ffffff;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-        #content {
-            height: 400px;
-            font-size: 18px;
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 2px solid #ffffff;
-            border-radius: 8px;
-            margin-bottom: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        textarea {
-            resize: none;
-            height: 200px;
-        }
-        .buttons {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-            position: relative;
-        }
-        button {
-            font-size: 20px;
-            padding: 10px 20px;
-            border: none;
-            margin-right: 10px;
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s;
-        }
-        button.list-btn {
-            background: #e61e8c;
-        }
-        button.like-btn {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-        }
-        button:hover {
-            background-color: #3d8b40;
-        }
-        button.list-btn:hover {
-            background: #e61e8c93;
-        }
-    </style>
+    <link rel="stylesheet" href="/assets/css/detail.css">
 </head>
 
 <body>
@@ -124,7 +32,7 @@
     <div id="content">${b.content}</div>
     <div class="buttons">
         <button class="list-btn like-btn" type="button" onclick="window.location.href='/board/like?no=${b.boardNo}'">
-            <i class="far fa-heart"></i> <span id="like">${b.likeCount}</span> 좋아요
+            <i class="fas fa-heart"></i> <span id="like">${b.likeCount}</span> 공감
         </button>
         <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
         <button class="list-btn" type="button" onclick="window.location.href='/board/modify?no=${b.boardNo}'">수정</button>
@@ -132,12 +40,15 @@
 </div>
 
 <script>
-    const $likeBtn = document.querySelector('.like-btn');
-    $likeBtn.addEventListener("click", function(e) {
-        const $heart = document.querySelector('.fa-heart');
-        $heart.classList.remove("far");
-        $heart.classList.add("fas");
-    });
+    // 좋아요
+    window.onload = function () {
+        $heartIcon = document.querySelector('.fas');
+      if (${b.likeCount} === 0) {
+          $heartIcon.classList.remove('fas');
+          $heartIcon.classList.add('far');
+      }
+    };
+    // 싫어요
 </script>
 </body>
 </html>

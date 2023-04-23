@@ -67,8 +67,7 @@ public class BoardController {
         model.addAttribute("b", board);
         return "chap05/modify";
     }
-    
-//     수정한 내용을 가지고 detail 로 이동
+
     @PostMapping("/modify")
     public String modify(BoardWriteRequestDTO dto, int bno) {
         // 수정중인 게시글 찾기
@@ -78,7 +77,7 @@ public class BoardController {
         return "redirect:/board/detail?bno=" + bno;
     }
 
-    // TODO : 좋아요 기능 만들기
+    // 6. 좋아요
     @GetMapping("/like")
     public String like(int no) {
         boardService.likeUp(no);
