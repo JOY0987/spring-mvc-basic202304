@@ -58,7 +58,6 @@ public class BoardController {
         return "chap05/detail";
     }
 
-    // TODO : 글 수정기능 만들기
     // 5. 글 수정 기능 만들기
     // 수정할 수 있는 창으로 접속
     @GetMapping("/modify")
