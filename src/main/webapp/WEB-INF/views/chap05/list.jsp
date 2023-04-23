@@ -39,6 +39,10 @@
                             <h2 class="card-title">${b.shorTitle}</h2>
                             <div class="time-view-wrapper">
                                 <div class="time"><i class="far fa-clock"></i>${b.date}</div>
+                                <div class="like">
+                                    <i class="fas fa-heart"></i>
+                                    <span class="like-count">${b.likeCount}</span>
+                                </div>
                                 <div class="view">
                                     <i class="fas fa-eye"></i>
                                     <span class="view-count">${b.viewCount}</span>

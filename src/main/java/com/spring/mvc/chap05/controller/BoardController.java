@@ -77,6 +77,13 @@ public class BoardController {
         board.modify(dto);
         return "redirect:/board/detail?bno=" + bno;
     }
-    // TODO : 글 따봉기능 만들기
+
+    // TODO : 좋아요 기능 만들기
+    @GetMapping("/like")
+    public String like(int no) {
+        boardService.likeUp(no);
+        return "redirect:/board/detail?bno=" + no;
+    }
+
     // TODO : 댓글기능 만들어보기..도ㅣ면...
 }

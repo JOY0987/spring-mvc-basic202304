@@ -56,4 +56,13 @@ public class BoardRepositoryImpl implements BoardRepository {
         return true;
     }
 
+    @Override
+    public boolean likeUP(int boardNo) {
+        if(!boardMap.containsKey(boardNo)) return false;
+        boardMap.get(boardNo).setLikeCount(boardMap.get(boardNo).getLikeCount() + 1);
+        // 조회수 증가 방지
+        boardMap.get(boardNo).setViewCount(boardMap.get(boardNo).getViewCount() - 1);
+        return true;
+    }
+
 }

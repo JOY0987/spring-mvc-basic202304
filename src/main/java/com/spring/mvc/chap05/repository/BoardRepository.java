@@ -20,4 +20,6 @@ public interface BoardRepository {
     // 게시물 삭제
     boolean deleteByNo(int boardNo);
 
+    boolean likeUP(int boardNo);
+
 }

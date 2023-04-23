@@ -46,8 +46,12 @@ public class BoardService {
         return new BoardDetailResponseDTO(board);
     }
 
-
     public Board findOne(int bno) {
         return boardRepository.findOne(bno);
+    }
+
+    // 좋아요 클릭 중간 처리
+    public boolean likeUp(int bno) {
+        return boardRepository.likeUP(bno);
     }
 }

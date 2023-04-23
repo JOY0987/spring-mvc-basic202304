@@ -82,6 +82,7 @@
             display: flex;
             justify-content: flex-end;
             margin-top: 20px;
+            position: relative;
         }
         button {
             font-size: 20px;
@@ -98,6 +99,12 @@
         button.list-btn {
             background: #e61e8c;
         }
+        button.like-btn {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
         button:hover {
             background-color: #3d8b40;
         }
@@ -109,7 +116,6 @@
 
 <body>
 <div id="wrap" class="form-container">
-<%--    <form action="/board/modify" method="post">--%>
     <h1>${b.boardNo}번 게시물 내용~ </h1>
     <h2># 작성일자: ${b.date}</h2>
     <label for="title">제목</label>
@@ -117,10 +123,21 @@
     <label for="content">내용</label>
     <div id="content">${b.content}</div>
     <div class="buttons">
+        <button class="list-btn like-btn" type="button" onclick="window.location.href='/board/like?no=${b.boardNo}'">
+            <i class="far fa-heart"></i> <span id="like">${b.likeCount}</span> 좋아요
+        </button>
         <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
         <button class="list-btn" type="button" onclick="window.location.href='/board/modify?no=${b.boardNo}'">수정</button>
     </div>
-<%--    </form>--%>
 </div>
+
+<script>
+    const $likeBtn = document.querySelector('.like-btn');
+    $likeBtn.addEventListener("click", function(e) {
+        const $heart = document.querySelector('.fa-heart');
+        $heart.classList.remove("far");
+        $heart.classList.add("fas");
+    });
+</script>
 </body>
 </html>

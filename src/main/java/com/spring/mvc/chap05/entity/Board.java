@@ -15,6 +15,7 @@ public class Board {
     private String title; // 제목
     private String content; // 내용
     private int viewCount; // 조회수
+    private int likeCount; // 좋아요수
     private LocalDateTime regDateTime; // 작성일자시간
 
     public Board(int boardNo, String title, String content) {
