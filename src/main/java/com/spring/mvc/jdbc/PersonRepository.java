@@ -2,10 +2,9 @@ package com.spring.mvc.jdbc;
 
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class PersonRepository {
@@ -149,5 +148,65 @@ public class PersonRepository {
                 }
             }
         }
+    }
+
+    // 사람 정보 전체 조회
+    public List<Person> findAll() {
+        List<Person> people = new ArrayList<>();
+        // try - with - resource : close 자동화 (AutoClosable)
+        try (Connection conn
+                     = DriverManager.getConnection(url, username, password)) {
+
+            conn.setAutoCommit(false);
+
+            String sql= "SELECT * FROM person";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+//            pstmt.executeUpdate(); -> DML
+            ResultSet rs = pstmt.executeQuery();
+            
+            // 포인터 커서로 첫번째 행부터 next 호출 시마다 매 다음 행을 지목 : rs.next()
+            while (rs.next()) {
+                // 위치한 커서에서 데이터 추출
+                long id = rs.getLong("id"); // n번째 커서의 아이디 읽기
+                String name = rs.getString("person_name"); // n번째 커서의 이름 읽기
+                int age = rs.getInt("person_age"); // n번째 커서의 나이 읽기
+
+                Person p = new Person(id, name, age);
+                people.add(p);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return people;
+    }
+
+    // 사람 정보 개별 조회
+    public Person findOne(Long id) {
+        // try - with - resource : close 자동화 (AutoClosable)
+        try (Connection conn
+                     = DriverManager.getConnection(url, username, password)) {
+
+            conn.setAutoCommit(false);
+
+            String sql= "SELECT * FROM person WHERE id=?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+
+            pstmt.setLong(1, id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                long pid = rs.getLong("id");
+                String name = rs.getString("person_name");
+                int age = rs.getInt("person_age");
+
+                Person p = new Person(pid, name, age);
+                return p;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
