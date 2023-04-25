@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ScoreService {
 
     private final ScoreRepositoty scoreRepositoty;
-    
+
     // 목록조회 중간처리
     /*
         컨트롤러는 데이터베이스를 통해 성적 정보 리스트를 가져오길 원한다.
