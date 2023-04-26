@@ -20,7 +20,7 @@ public class ScoreService {
     private final ScoreRepository scoreRepository;
 
     @Autowired
-    public ScoreService(@Qualifier("jdbc") ScoreRepository scoreRepository) {
+    public ScoreService(@Qualifier("spring") ScoreRepository scoreRepository) {
         this.scoreRepository = scoreRepository;
     }
 
