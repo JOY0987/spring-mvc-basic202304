@@ -12,8 +12,8 @@ import java.util.Map;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
-@Repository // 스프링 빈 등록 : 객체의 생성의 제어권을 스프링에게 위임 (@Repository: 저장소 빈에 사용)
-public class ScoreRepositoryImpl implements ScoreRepositoty { // Impl : 구현체가 한개일때 제목에 사용
+@Repository("memory") // 스프링 빈 등록 : 객체의 생성의 제어권을 스프링에게 위임 (@Repository: 저장소 빈에 사용)
+public class ScoreRepositoryImpl implements ScoreRepository { // Impl : 구현체가 한개일때 제목에 사용
 
     // key: 학번, value: 성적정보
     private static final Map<Integer, Score> scoreMap;

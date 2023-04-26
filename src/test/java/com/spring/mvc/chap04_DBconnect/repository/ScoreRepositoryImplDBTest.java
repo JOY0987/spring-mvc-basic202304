@@ -3,7 +3,7 @@ package com.spring.mvc.chap04_DBconnect.repository;
 import com.spring.mvc.chap04.dto.ScoreRequestDTO;
 import com.spring.mvc.chap04.entity.Score;
 import com.spring.mvc.chap04.repository.ScoreRepositoryImpl;
-import com.spring.mvc.chap04.repository.ScoreRepositoty;
+import com.spring.mvc.chap04.repository.ScoreRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,7 +11,7 @@ import java.util.List;
 
 class ScoreRepositoryImplDBTest {
 
-    ScoreRepositoty repositoty = new ScoreRepositoryImpl();
+    ScoreRepository repositoty = new ScoreRepositoryImpl();
 
     @Test
     @DisplayName("전체 학생의 성적 정보를 가져와야 한다.")
