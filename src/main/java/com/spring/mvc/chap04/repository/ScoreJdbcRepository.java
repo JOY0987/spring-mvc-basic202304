@@ -47,17 +47,7 @@ public class ScoreJdbcRepository implements ScoreRepository { // Impl : 구현�
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                int stuNum = rs.getInt("stu_num");
-                String stuName = rs.getString("stu_name");
-                int kor = rs.getInt("kor");
-                int eng = rs.getInt("eng");
-                int math = rs.getInt("math");
-                int total = rs.getInt("total");
-                double average = rs.getDouble("average");
-                Grade grade = Grade.valueOf(rs.getString("grade")); // 읽어올 때는 Grade 로 형변환
-
-                Score score = new Score(stuName, kor, eng, math, stuNum, total, average, grade);
-                scoreList.add(score);
+                scoreList.add(new Score(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -161,17 +151,7 @@ public class ScoreJdbcRepository implements ScoreRepository { // Impl : 구현�
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-//                stuNum = rs.getInt("stu_num");
-                String stuName = rs.getString("stu_name");
-                int kor = rs.getInt("kor");
-                int eng = rs.getInt("eng");
-                int math = rs.getInt("math");
-                int total = rs.getInt("total");
-                double average = rs.getDouble("average");
-                Grade grade = Grade.valueOf(rs.getString("grade")); // 읽어올 때는 Grade 로 형변환
-
-                Score score = new Score(stuName, kor, eng, math, stuNum, total, average, grade);
-                return score;
+                return new Score(rs);
             }
         } catch (SQLException e) {
             e.printStackTrace();
