@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@Builder
 public class ScoreRequestDTO {
 
     // 필드명은 input 태그 내 name 과 똑같게 설정

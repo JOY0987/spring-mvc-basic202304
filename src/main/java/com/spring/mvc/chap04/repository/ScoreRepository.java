@@ -12,9 +12,7 @@ public interface ScoreRepository {
     
     // 성적 정보 전체 목록 조회 명세화
     List<Score> findAll(); // 일반 목록조회
-    default List<Score> findAll(String sort) {
-        return null;
-    };  // 정렬 목록조회
+    List<Score> findAll(String sort);  // 정렬 목록조회
         // => 인터페이스 구현 이후 추가하는 메서드이므로, 오버라이딩이 강제되지 않도록 합니다. (default + {})
     
 
