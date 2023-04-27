@@ -23,41 +23,36 @@ public class ScoreSpringRepository implements ScoreRepository {
     }
 
     @Override
-    public List<Score> findAll(String sort) {
-        Comparator<Score> compator = comparing(Score::getStuNum);
+    public List<Score> findAll(String sort) { // sort 를 쿼리 ? 로 처리할 수 없음
+        String sql = "SELECT * FROM score ";
         switch (sort) {
             case "num":
-                compator = comparing(Score::getStuNum);
+                sql += "ORDER BY stu_num";
                 break;
             case "name":
-                compator = comparing(Score::getName);
+                sql += "ORDER BY stu_name";
                 break;
             case "average":
-                compator = comparing(Score::getAverage).reversed();
+                sql += "ORDER BY average DESC"; // 평균은 높은 순으로 출력해야함
                 break;
             default:
         }
-        List<Score> scoreList = findAll();
-        return scoreList.stream()
-                .sorted(compator)
-                .collect(Collectors.toList());
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Score(rs));
     }
 
     @Override
     public boolean save(Score score) {
-        String sql = "INSERT INTO score (stu_num, stu_name, kor, eng, math, total, average, grade) " +
+        String sql = "INSERT INTO score (stu_name, kor, eng, math, total, average, grade) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        int result = jdbcTemplate.update(
+        return jdbcTemplate.update(
                 sql
-                , score.getStuNum()
                 , score.getName()
                 , score.getKor()
                 , score.getEng()
                 , score.getMath()
                 , score.getTotal()
                 , score.getAverage()
-                , String.valueOf(score.getGrade()));
-        return result == 1;
+                , String.valueOf(score.getGrade())) == 1;
     }
 
     @Override
@@ -76,8 +71,7 @@ public class ScoreSpringRepository implements ScoreRepository {
     @Override
     public boolean update(Score score) {
         String sql = "UPDATE score SET stu_name=?, kor=?, eng=?, math=?, total=?, average=?, grade=? WHERE stu_num=?";
-        int result = jdbcTemplate.update(sql, score.getName(), score.getKor(), score.getEng(), score.getMath(),
-                score.getTotal(), score.getAverage(), String.valueOf(score.getGrade()), score.getStuNum());
-        return result == 1;
+        return jdbcTemplate.update(sql, score.getName(), score.getKor(), score.getEng(), score.getMath(),
+                score.getTotal(), score.getAverage(), String.valueOf(score.getGrade()), score.getStuNum()) == 1;
     }
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 에는 인터페이스 풀 네임(패키지 + 인터페이스 이름) -->
+<mapper namespace="com.spring.mvc.mybatis.PersonMapper">
+
+<!--  SQL 작성 : 추상메서드 별로 작성  -->
+<!--  id 에는 추상메서드 이름을 적습니다.  -->
+<!--  객체가 들어오면 #{필드명} / 기본데이터가 들어오면 #{파라미터명}  -->
+    <insert id="save">
+        INSERT INTO person
+            (person_name, person_age)
+        VALUES (#{personName}, #{personAge})
+    </insert>
+
+    <update id="change">
+        UPDATE person
+        SET person_name = #{personName}, person_age = #{personAge}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="remove">
+        DELETE FROM person
+        WHERE id = #{id}
+    </delete>
+
+<!--  ORM : 자바객체 필드랑 테이블 컬럼을 매핑  -->
+<!--  resultMap 이 결과가 여러줄이면 알아서 리스트에 담고, 하나면 알아서 객체 하나만 반환한다.  -->
+    <resultMap id="person" type="com.spring.mvc.jdbc.Person">
+        <!--  테이블과 객체 간 이름이 다른 것을 알려주는 역할 (같은건 안 적어도 됨)  -->
+        <result property="personName" column="person_name" />
+        <result property="personAge" column="person_age" />
+    </resultMap>
+
+    <select id="findAll" resultMap="person">
+        SELECT * FROM person
+    </select>
+
+    <select id="findOne" resultMap="person">
+        SELECT * FROM person
+        WHERE id=#{id}
+    </select>
+
+</mapper>
+
+<!-- 마이바티스 공식 문서 -->
