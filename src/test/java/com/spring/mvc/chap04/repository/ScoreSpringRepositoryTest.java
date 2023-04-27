@@ -24,7 +24,7 @@ class ScoreSpringRepositoryTest {
 
     @Test
     void update() {
-        Score score = new Score("수정햇어요", 90, 90, 90);
+        Score score = new Score(new ScoreRequestDTO("수정햇어요", 90, 90, 90));
         repository.update(score);
     }
 }
