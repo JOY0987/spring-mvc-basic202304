@@ -69,7 +69,6 @@ public class BoardController {
     @PostMapping("/modify")
     public String modify(BoardWriteRequestDTO dto, int bno) {
         // 수정중인 게시글 찾기
-        Board board = boardService.findOne(bno);
         // 수정한 내용으로 변경
 //        board.modify(dto);
         boardService.modify(dto.getTitle(), dto.getContent(), bno);

@@ -30,7 +30,7 @@
         <h1>${b.boardNo}번 게시물 내용~ </h1>
         <h2># 작성일자: ${b.date}</h2>
         <label for="title">제목</label>
-        <input type="text" id="title" maxlength="40" name="title" value="${b.title}">
+        <input type="text" id="title" maxlength="80" name="title" value="${b.title}">
         <label for="content">내용</label>
         <textarea id="content" name="content" maxlength="2000" required>${b.content}</textarea>
         <div class="buttons">
