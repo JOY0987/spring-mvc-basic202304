@@ -4,6 +4,7 @@ import com.spring.mvc.chap05.dto.BoardDetailResponseDTO;
 import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
+import com.spring.mvc.chap05.repository.BoardMapper;
 import com.spring.mvc.chap05.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,8 @@ import static java.util.stream.Collectors.*;
 @RequiredArgsConstructor
 public class BoardService {
 
-    private final BoardRepository boardRepository;
+//    private final BoardRepository boardRepository;
+    private final BoardMapper boardRepository;
 
 
     // 중간처리 기능 자유롭게 사용

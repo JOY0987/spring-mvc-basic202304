@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 에는 인터페이스 풀 네임(패키지 + 인터페이스 이름) -->
+<mapper namespace="com.spring.mvc.chap04.repository.ScoreMapper">
+    <insert id = "save">
+        INSERT INTO score
+            (stu_name, kor, eng, math, total, average, grade)
+        VALUES (#{stuName}, #{kor}, #{eng}, #{math}, #{total}, #{average}, #{grade})
+    </insert>
+
+    <update id = "update">
+        UPDATE score
+        SET stu_name=#{stuName}, kor=#{kor}, eng=#{eng}, math=#{math}, total=#{total}, average=#{average}, grade=#{grade}
+        WHERE stu_num=#{stuNum}
+    </update>
+
+    <delete id="deleteByStuNum">
+        DELETE FROM score
+        WHERE stu_num=#{stuNum}
+    </delete>
+
+
+<!--    <resultMap id="score" type="com.spring.mvc.chap04.entity.Score">-->
+<!--        <result property="stuNum" column="stu_num" />-->
+<!--        <result property="name" column="stu_name" />-->
+<!--    </resultMap>-->
+
+<!-- 동적 SQL-->
+    <select id="findAll" resultType="score">
+        SELECT * FROM score
+        <if test="sort == 'num'">
+            ORDER BY stu_num ASC
+        </if>
+        <if test="sort == 'name'">
+            ORDER BY stu_name
+        </if>
+        <if test="sort == 'avg'">
+            ORDER BY average DESC
+        </if>
+    </select>
+
+    <select id="findByStuNum" resultType="score">
+        SELECT * FROM score
+        WHERE stu_num=#{stuNum}
+    </select>
+
+</mapper>

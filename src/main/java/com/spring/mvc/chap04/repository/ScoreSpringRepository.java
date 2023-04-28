@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
 
@@ -46,7 +44,7 @@ public class ScoreSpringRepository implements ScoreRepository {
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         return jdbcTemplate.update(
                 sql
-                , score.getName()
+                , score.getStuName()
                 , score.getKor()
                 , score.getEng()
                 , score.getMath()
@@ -71,7 +69,7 @@ public class ScoreSpringRepository implements ScoreRepository {
     @Override
     public boolean update(Score score) {
         String sql = "UPDATE score SET stu_name=?, kor=?, eng=?, math=?, total=?, average=?, grade=? WHERE stu_num=?";
-        return jdbcTemplate.update(sql, score.getName(), score.getKor(), score.getEng(), score.getMath(),
+        return jdbcTemplate.update(sql, score.getStuName(), score.getKor(), score.getEng(), score.getMath(),
                 score.getTotal(), score.getAverage(), String.valueOf(score.getGrade()), score.getStuNum()) == 1;
     }
 }

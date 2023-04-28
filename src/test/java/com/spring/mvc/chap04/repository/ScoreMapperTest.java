@@ -43,7 +43,7 @@ class ScoreMapperTest {
     void findOne() {
         Score score = scoreMapper.findByStuNum(13);
         System.out.println("score = " + score);
-        assertEquals("자바", score.getName());
+        assertEquals("자바", score.getStuName());
         assertEquals(100, score.getMath());
         assertNotNull(score);
     }

@@ -1,6 +1,5 @@
 package com.spring.mvc.chap04.repository;
 
-import com.spring.mvc.chap04.entity.Grade;
 import com.spring.mvc.chap04.entity.Score;
 import org.springframework.stereotype.Repository;
 
@@ -64,7 +63,7 @@ public class ScoreJdbcRepository implements ScoreRepository { // Impl : 구현�
                 compator = comparing(Score::getStuNum);
                 break;
             case "name":
-                compator = comparing(Score::getName);
+                compator = comparing(Score::getStuName);
                 break;
             case "average":
                 compator = comparing(Score::getAverage).reversed();
@@ -91,7 +90,7 @@ public class ScoreJdbcRepository implements ScoreRepository { // Impl : 구현�
             PreparedStatement pstmt = conn.prepareStatement(sql);
 
             pstmt.setInt(1, score.getStuNum());
-            pstmt.setString(2, score.getName());
+            pstmt.setString(2, score.getStuName());
             pstmt.setInt(3, score.getKor());
             pstmt.setInt(4, score.getEng());
             pstmt.setInt(5, score.getMath());

@@ -14,8 +14,8 @@ import static com.spring.mvc.chap04.entity.Grade.*;
 @AllArgsConstructor
 @Builder
 public class Score {
-    
-    private String name; // 학생 이름
+    // 필드 이름과 DB 이름 맞추기
+    private String stuName; // 학생 이름
     private int kor, eng, math; // 국, 영, 수 점수
     private int stuNum; // 학번
     private int total; // 총점
@@ -25,7 +25,7 @@ public class Score {
     // Repository 에서 반복되는 과정을 생성자에서 한번에 처리합니다.
     public Score(ResultSet rs) throws SQLException {
         this.stuNum = rs.getInt("stu_num");
-        this.name = rs.getString("stu_name");
+        this.stuName = rs.getString("stu_name");
         this.kor = rs.getInt("kor");
         this.eng = rs.getInt("eng");
         this.math = rs.getInt("math");
@@ -34,7 +34,7 @@ public class Score {
         this.grade = Grade.valueOf(rs.getString("grade"));
     }
     public Score(ScoreRequestDTO dto) {
-        this.name = dto.getName();
+        this.stuName = dto.getName();
         changeScore(dto); // 학점 계산
     }
 

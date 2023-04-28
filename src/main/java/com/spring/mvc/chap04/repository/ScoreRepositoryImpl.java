@@ -52,7 +52,7 @@ public class ScoreRepositoryImpl implements ScoreRepository { // Impl : 구현�
                 compator = comparing(Score::getStuNum);
                 break;
             case "name":
-                compator = comparing(Score::getName);
+                compator = comparing(Score::getStuName);
                 break;
             case "average":
                 compator = comparing(Score::getAverage).reversed();
