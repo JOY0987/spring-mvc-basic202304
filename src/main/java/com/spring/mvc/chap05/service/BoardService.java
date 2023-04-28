@@ -5,7 +5,6 @@ import com.spring.mvc.chap05.dto.BoardListResponseDTO;
 import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.repository.BoardMapper;
-import com.spring.mvc.chap05.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,10 +40,11 @@ public class BoardService {
     }
 
     // 글 상세조회 중간 처리
-    public BoardDetailResponseDTO detail(int bno) {
+    public BoardDetailResponseDTO getDetail(int bno) {
         Board board = boardRepository.findOne(bno);
         // 조회수 상승 처리
-        board.setViewCount(board.getViewCount() + 1);
+//        board.setViewCount(board.getViewCount() + 1);
+        boardRepository.upViewCount(bno);
         return new BoardDetailResponseDTO(board);
     }
 
@@ -55,5 +55,9 @@ public class BoardService {
     // 좋아요 클릭 중간 처리
     public boolean likeUp(int bno) {
         return boardRepository.likeUP(bno);
+    }
+
+    public boolean modify(String title, String content, int bno) {
+        return boardRepository.modify(title, content, bno);
     }
 }

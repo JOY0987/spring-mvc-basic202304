@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.repository;
 
+import com.spring.mvc.chap05.dto.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.entity.Board;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -21,5 +22,9 @@ public interface BoardMapper {
     boolean deleteByNo(int boardNo);
 
     boolean likeUP(int boardNo);
+
+    void upViewCount(int boardNo);
+
+    boolean modify(String title, String content, int boardNo);
 
 }

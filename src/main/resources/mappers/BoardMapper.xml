@@ -14,7 +14,7 @@
         SELECT
             board_no, title, content, view_count, like_count, reg_date_time
         FROM tbl_board
-        ORDER BY board_no = #{boardNo}
+        WHERE board_no = #{boardNo}
     </select>
 
     <insert id="save">
@@ -27,4 +27,22 @@
         DELETE FROM tbl_board
         WHERE board_no = #{boardNo}
     </delete>
+
+    <update id="upViewCount">
+        update tbl_board
+        set view_count = view_count + 1
+        where board_no = #{boardNo}
+    </update>
+
+    <update id="likeUP">
+        update tbl_board
+        set like_count = like_count + 1, view_count = view_count - 1
+        where board_no = #{boardNo}
+    </update>
+
+    <update id="modify">
+        update tbl_board
+        set title = #{title}, content = #{content}
+        where board_no = #{boardNo}
+    </update>
 </mapper>

@@ -53,8 +53,7 @@ public class BoardController {
     // 4. 상세정보 조회 요청
     @GetMapping("/detail")
     public String detail(int bno, Model model) {
-        BoardDetailResponseDTO board = boardService.detail(bno);
-        model.addAttribute("b", board);
+        model.addAttribute("b", boardService.getDetail(bno));
         return "chap05/detail";
     }
 
@@ -62,7 +61,7 @@ public class BoardController {
     // 수정할 수 있는 창으로 접속
     @GetMapping("/modify")
     public String modify(int no, Model model) {
-        BoardDetailResponseDTO board = boardService.detail(no);
+        BoardDetailResponseDTO board = boardService.getDetail(no);
         model.addAttribute("b", board);
         return "chap05/modify";
     }
@@ -72,7 +71,8 @@ public class BoardController {
         // 수정중인 게시글 찾기
         Board board = boardService.findOne(bno);
         // 수정한 내용으로 변경
-        board.modify(dto);
+//        board.modify(dto);
+        boardService.modify(dto.getTitle(), dto.getContent(), bno);
         return "redirect:/board/detail?bno=" + bno;
     }
 
