@@ -76,7 +76,7 @@
                 <ul class="pagination pagination-lg pagination-custom">
 
                     <c:if test="${maker.page.pageNo != 1}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=1">&lt;&lt;</a></li>
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=1">&lt;$lt;</a></li>
                     </c:if>
 
                     <c:if test="${maker.prev}">
@@ -94,7 +94,7 @@
                     </c:if>
 
                     <c:if test="${maker.page.pageNo != maker.finalPage}">
-                    <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}">&gt;&gt;</a></li>
+                        <li class="page-item"><a class="page-link" href="/board/list?pageNo=${maker.finalPage}">&gt;&gt;</a></li>
                     </c:if>
                 </ul>
             </nav>
