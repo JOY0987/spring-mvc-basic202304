@@ -25,6 +25,7 @@ public class Page {
     }
     public void setAmount(int amount) {
         if (amount < 6 || amount > 10) {
+            // 10 은 너무 높은 숫자의 페이지를 입력했을 경우, 과부화+레이아웃이 깨지는걸 방지하는 숫자로 큰 의미는 없다.
              this.amount = 6;
              return;
         }

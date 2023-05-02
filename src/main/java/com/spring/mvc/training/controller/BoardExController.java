@@ -1,6 +1,6 @@
 //package com.spring.mvc.training.controller;
 //
-//import com.spring.mvc.training.service.TableService;
+//import com.spring.mvc.training.service.BoardService;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.stereotype.Controller;
@@ -14,12 +14,13 @@
 //@Slf4j
 //public class TableController {
 //
-//    private final TableService tableService;
+//    private final BoardService tableService;
 //    @GetMapping("/table")
 //    public String list(Model model) {
 //        log.info("/table/list : GET");
-////        log.info("page : {}", page);
-////        return "";
+//        List<>
+//        return "";
 //    }
 //
 //}
+// TODO : 컨트롤러 만들기, DTO 만들기, jsp 만들기, css 적용
