@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.repository;
 
+import com.spring.mvc.chap05.dto.page.Page;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.entity.Board;
 import com.spring.mvc.chap05.entity.Reply;
@@ -10,7 +11,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
+
+// jUnit4 기준으로 작성
 
 @SpringBootTest
 class ReplyMapperTest {
@@ -84,16 +89,47 @@ class ReplyMapperTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("3번 댓글을 조회했을 때, 댓글 작성자의 이름은 잼민이3이어야 한다.")
+    @Transactional
+    @Rollback
+    void findOneTest() {
+        // given
+        Reply reply = replyMapper.findOne(3L);
+        // then
+        assertEquals("잼민이3", reply.getReplyWriter());
+    }
+
+    @Test
+    @DisplayName("1001번 댓글 내용을 '수정댐'으로 수정하고, 다시 조회했을 때 1001번 댓글의 내용은 '수정댐'이어야 한다.")
     @Transactional
     @Rollback
     void modifyTest() {
+
+        Reply modifyReply = Reply.builder()
+                .replyNo(1001L)
+                .replyText("수정댐")
+                .build();
+
+        // when
+        boolean flag = replyMapper.modify(modifyReply);
+
+        // then
+        assertTrue(flag);
+        assertEquals("수정댐", replyMapper.findOne(1001L).getReplyText());
+    }
+
+    @Test
+    @DisplayName("3번 게시글의 전체 댓글을 조회했을 때, 리스트의 길이는 6이어야 하고 0번 인덱스의 댓글 작성자가 잼민이34 여야 한다.")
+    @Transactional
+    @Rollback
+    void findAllTest() {
         // given
+        List<Reply> replyList = replyMapper.findAll(3L, new Page());
 
         // when
 
         // then
-
+        assertEquals(6, replyList.size());
+        assertEquals("잼민이34", replyList.get(0).getReplyWriter());
     }
-
 }
