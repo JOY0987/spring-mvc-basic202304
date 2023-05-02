@@ -34,7 +34,7 @@
         <button class="list-btn like-btn" type="button" onclick="window.location.href='/board/like?no=${b.boardNo}'">
             <i class="fas fa-heart"></i> <span id="like">${b.likeCount}</span> 공감
         </button>
-        <button class="list-btn" type="button" onclick="window.location.href='/board/list'">목록</button>
+        <button class="list-btn" type="button" onclick="window.location.href='/board/list?pageNo=${s.pageNo}&type=${s.type}&keyword=${s.keyword}'">목록</button>
         <button class="list-btn" type="button" onclick="window.location.href='/board/modify?no=${b.boardNo}'">수정</button>
     </div>
 </div>

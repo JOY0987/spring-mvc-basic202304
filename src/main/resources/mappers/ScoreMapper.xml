@@ -21,7 +21,6 @@
         WHERE stu_num=#{stuNum}
     </delete>
 
-
 <!--    <resultMap id="score" type="com.spring.mvc.chap04.entity.Score">-->
 <!--        <result property="stuNum" column="stu_num" />-->
 <!--        <result property="name" column="stu_name" />-->
