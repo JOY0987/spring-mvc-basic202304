@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+// 수업용 Controller
+
 //@Controller
 //@ResponseBody
 @RestController // 리턴된 객체를 자동으로 환경에 맞는 JSON 배열로 변환한다.

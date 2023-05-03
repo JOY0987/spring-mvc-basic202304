@@ -132,4 +132,16 @@ class ReplyMapperTest {
         assertEquals(6, replyList.size());
         assertEquals("잼민이34", replyList.get(0).getReplyWriter());
     }
+
+    @Test
+    void bulkReplyInsert() {
+        for (int i = 0; i < 300; i++) {
+            Reply reply = Reply.builder()
+                    .replyText("페이지댓글내용" + i)
+                    .replyWriter("망둥어")
+                    .boardNo(298L)
+                    .build();
+            replyMapper.save(reply);
+        }
+    }
 }
