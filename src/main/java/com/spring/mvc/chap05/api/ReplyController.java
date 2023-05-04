@@ -21,6 +21,8 @@ import static org.springframework.http.ResponseEntity.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/replies") // 버전이 바뀌면 v 숫자를 올려주기
 @Slf4j
+// 클라이언트의 접근을 어떤 app 에서만 허용할 것인가?
+@CrossOrigin(origins = "http://127.0.0.1:5500") // 5500 포트에서 보낸 요청은 허용해줄게 ㅋ (여러개 작성 가능)
 public class ReplyController {
 
     private final ReplyService replyService;
