@@ -24,6 +24,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Reply {
+    // entity 클래스의 필드명은 데이터베이스의 컬럼명과 동일하게!!
+    // 역할 : 데이터베이스와 상호작용
     private long replyNo;
     private String replyText;
     private String replyWriter;
