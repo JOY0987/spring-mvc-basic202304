@@ -8,22 +8,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판 글쓰기</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Single+Day&display=swap" rel="stylesheet">
-
-    <!-- reset -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
-
-    <!-- fontawesome css: https://fontawesome.com -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
-
-    <link rel="stylesheet" href="/assets/css/main.css">
-    <link rel="stylesheet" href="/assets/css/detail.css">
+    <%-- 웹페이지의 고정 헤더를 만들어서 페이지마다 적용하기 (모듈화) --%>
+    <%@ include file="../include/static-head.jsp" %>
 
 </head>
 
 <body>
+
+<%@ include file="../include/static-head.jsp" %>
+
 <div id="wrap" class="form-container">
     <form action="/board/modify" method="post">
         <input type="hidden" name="bno" value="${b.boardNo}">
