@@ -104,11 +104,12 @@ public class ReplyController {
 
     // 댓글 수정 요청
 //    @RequestMapping(method = {RequestMethod.PATCH, RequestMethod.PUT}) // PUT, PATCH 아무거나 들어와도 수정처리
-    @PutMapping("/{replyNo}")
+    @PutMapping
     public ResponseEntity<?> modify(
             @Validated @RequestBody ReplyModifyResponseDTO dto
             , BindingResult result
     ) {
+        log.info("dto: {}", dto);
         if (result.hasErrors()) {
             return ResponseEntity
                     .badRequest()
