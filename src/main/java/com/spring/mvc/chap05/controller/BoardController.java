@@ -6,6 +6,7 @@ import com.spring.mvc.chap05.dto.request.BoardWriteRequestDTO;
 import com.spring.mvc.chap05.dto.page.PageMaker;
 import com.spring.mvc.chap05.dto.page.Search;
 import com.spring.mvc.chap05.service.BoardService;
+import com.spring.mvc.util.LoginUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -42,13 +44,13 @@ public class BoardController {
 //                break;
 //            }
 //        }
-
-        // 세션을 확인
-        Object login = request.getSession().getAttribute("login");
-        if (login != null) flag = true;
-
-        // 로그인 쿠키(or 세션) 없으면 나가세여
-        if (!flag) return "redirect:/members/sign-in";
+//
+//        // 세션을 확인
+//        Object login = request.getSession().getAttribute("login");
+//        if (login != null) flag = true;
+//
+//        // 로그인 쿠키(or 세션) 없으면 나가세여
+//        if (!flag) return "redirect:/members/sign-in";
 
         log.info("/board/list : GET");
         log.info("page : {}", page);
@@ -68,14 +70,20 @@ public class BoardController {
     // 2. 새 글 쓰기
     // 새 글 작성하는 창 띄우기
     @GetMapping("/write")
-    public String write() {
+    public String write(HttpSession session) {
+//        if (!LoginUtil.isLogin(session)) {
+//            return "redirect:/members/sign-in";
+//        }
+        System.out.println("/board/write : GET");
         return "chap05/write";
     }
 
+    // 글 등록 요청 처리
     // 게시 버튼을 누르면 글을 추가하고 목록으로 돌아가기
     @PostMapping("/write")
-    public String writeSuccess(BoardWriteRequestDTO dto) {
-        boardService.register(dto);
+    public String writeSuccess(BoardWriteRequestDTO dto, HttpSession session) {
+        System.out.println("/board/write : POST");
+        boardService.register(dto, session);
         return "redirect:/board/list";
     }
 

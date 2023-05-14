@@ -18,6 +18,8 @@ public class Board {
     private int viewCount; // 조회수
     private int likeCount; // 좋아요수
     private LocalDateTime regDateTime; // 작성일자시간
+    private String account; // 작성자 계정명
+    private String writer; // 작성자 이름 (추가)
 
     public Board(int boardNo, String title, String content) {
         this.boardNo = boardNo;
