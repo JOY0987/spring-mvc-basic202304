@@ -1,19 +1,22 @@
 package com.spring.mvc.chap05.controller;
 
-import com.spring.mvc.chap05.dto.LoginRequestDTO;
-import com.spring.mvc.chap05.dto.SignUpRequestDTO;
+import com.spring.mvc.chap05.dto.request.LoginRequestDTO;
+import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
 import com.spring.mvc.chap05.service.LoginResult;
 import com.spring.mvc.chap05.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import static com.spring.mvc.chap05.service.LoginResult.*;
 
@@ -65,13 +68,37 @@ public class MemberController {
     @PostMapping("sign-in")
      public String signIn(LoginRequestDTO dto
                           // 리다이렉션 시 2번째 응답에 데이터를 보내기 위함! model 에 담으면 2번째 응답은 모른다.
-                        , RedirectAttributes ra) {
+                        , RedirectAttributes ra
+                          // 응답할 때 정보를 실어 보내기 위함!
+                        , HttpServletResponse response
+                        , HttpServletRequest request
+    ) {
+
         log.info("/member/sign-in POST ! - {}", dto);
 
         LoginResult result = memberService.authenticate(dto);
 
         // 로그인 성공시
         if (result == SUCCESS) {
+
+           /* 
+           // 1. 쿠키 방식으로 로그인 유지
+           // 쿠키 만들기 (로그인 성공 정보 기억)
+            // javax servlet 으로
+            Cookie loginCookie = new Cookie("login", "홍길동");
+            // 쿠키 셋팅
+            loginCookie.setPath("/"); // 쿠키 유효범위 설정 (보통 전체 다 들고다니게 함)
+            loginCookie.setMaxAge(60 * 60 * 24); // 쿠키 수명 설정 (하루짜리)
+            // 쿠키를 응답시에 실어서 클라이언트에게 전송
+            response.addCookie(loginCookie);
+            */
+            
+            // 2. 세션 방식으로 로그인 유지
+            // 서버에서 세션에 로그인 정보를 저장
+            memberService
+                    .maintainLoginState(request.getSession(), dto.getAccount());
+
+//            ra.addFlashAttribute("flag", true);
             return "redirect:/"; // 홈으로
         }
 
@@ -81,5 +108,17 @@ public class MemberController {
 
         // 로그인 실패시
         return "redirect:/members/sign-in"; // 요청 URL
+    }
+
+    // 로그아웃 요청 처리
+    @GetMapping("/sign-out")
+    public String signOut(HttpSession session) {
+        // 세션에서 login 정보를 제거
+//        HttpSession session = request.getSession(); // 브라우저에 저장된 세션 가져오기
+        session.removeAttribute("login");
+
+        // 세션을 아예 초기화 (세션만료 시간)
+        session.invalidate();
+        return "redirect:/";
     }
 }

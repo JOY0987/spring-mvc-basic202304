@@ -1,13 +1,16 @@
 package com.spring.mvc.chap05.service;
 
-import com.spring.mvc.chap05.dto.LoginRequestDTO;
-import com.spring.mvc.chap05.dto.SignUpRequestDTO;
+import com.spring.mvc.chap05.dto.request.LoginRequestDTO;
+import com.spring.mvc.chap05.dto.request.SignUpRequestDTO;
+import com.spring.mvc.chap05.dto.response.LoginUserResponseDTO;
 import com.spring.mvc.chap05.entity.Member;
 import com.spring.mvc.chap05.repository.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 import static com.spring.mvc.chap05.service.LoginResult.*;
 
@@ -58,5 +61,34 @@ public class MemberService {
         }
         log.info("{}님 로그인 성공!", dto.getAccount());
         return SUCCESS;
+    }
+
+    public void maintainLoginState(HttpSession session,
+                                   String account
+    ) {
+        // 로그인이 성공하면 세션에 로그인한 회원의 정보들을 저장
+        /*
+            로그인시 클라이언트에게 전달할 회원정보
+            - 닉네임
+            - 프로필사진
+            - 마지막 로그인 시간
+         */
+        Member member = getMember(account);
+        
+        // 현재 로그인한 사람의 화면에 보여줄 일부 정보
+        LoginUserResponseDTO dto = LoginUserResponseDTO.builder()
+                .account(member.getAccount())
+                .nickName(member.getName())
+                .email(member.getEmail())
+                .build();
+        // 그 정보를 세션에 저장
+        session.setAttribute("login", dto);
+        // 세션의 수명을 설정
+        session.setMaxInactiveInterval(60 * 60); // 1시간 (기본 30분)
+    }
+
+    // 멤버 정보를 가져오는 서비스 기능
+    public Member getMember(String account) {
+        return memberMapper.findMember(account);
     }
 }

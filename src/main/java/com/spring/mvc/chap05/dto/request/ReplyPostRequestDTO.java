@@ -1,4 +1,4 @@
-package com.spring.mvc.chap05.dto;
+package com.spring.mvc.chap05.dto.request;
 
 import com.spring.mvc.chap05.entity.Reply;
 import lombok.*;

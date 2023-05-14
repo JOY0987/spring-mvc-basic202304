@@ -1,10 +1,9 @@
 package com.spring.mvc.chap05.api;
 
-import com.spring.mvc.chap05.dto.ReplyListResponseDTO;
-import com.spring.mvc.chap05.dto.ReplyModifyResponseDTO;
-import com.spring.mvc.chap05.dto.ReplyPostRequestDTO;
+import com.spring.mvc.chap05.dto.response.ReplyListResponseDTO;
+import com.spring.mvc.chap05.dto.response.ReplyModifyResponseDTO;
+import com.spring.mvc.chap05.dto.request.ReplyPostRequestDTO;
 import com.spring.mvc.chap05.dto.page.Page;
-import com.spring.mvc.chap05.entity.Reply;
 import com.spring.mvc.chap05.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
