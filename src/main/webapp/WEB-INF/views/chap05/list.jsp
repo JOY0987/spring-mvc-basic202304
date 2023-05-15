@@ -70,11 +70,14 @@
                                 ${b.shortContent}
                         </div>
                     </section>
-                    <div class="card-btn-group">
-                        <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
+
+                    <c:if test="${login.account == b.account || login.auth == 'ADMIN'}">
+                        <div class="card-btn-group">
+                            <button class="del-btn" data-href="/board/delete?bno=${b.boardNo}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </c:if>
                 </div>
             </c:forEach>
 

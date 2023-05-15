@@ -81,11 +81,12 @@ public class MemberService {
                 .account(member.getAccount())
                 .nickName(member.getName())
                 .email(member.getEmail())
+                .auth(member.getAuth().toString()) // getAuth 가 이늄이라 toString 필수
                 .build();
         // 그 정보를 세션에 저장
         session.setAttribute(LoginUtil.LOGIN_KEY, dto); // 로그인 키에 로그인한 사람의 정보가 들어간다.
         // 세션의 수명을 설정
-        session.setMaxInactiveInterval(60 * 60); // 1시간 (기본 30분)
+        session.setMaxInactiveInterval(60 * 60); // 1시간 후 펑 (기본 30분)
     }
 
     // 멤버 정보를 가져오는 서비스 기능

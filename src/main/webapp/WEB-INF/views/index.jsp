@@ -27,7 +27,6 @@
 
 
     <h1 id="main-title">
-        aaa
     <%--  session.getAttribute("login") --%>
         <c:if test="${sessionScope.login == null}">
             초보자님 안녕하세요~

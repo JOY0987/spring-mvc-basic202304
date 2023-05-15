@@ -22,4 +22,13 @@ public class LoginUtil {
 
         return loginUserInfo.getAccount();
     }
+
+    // 관리자인지 확인해주는 메서드
+    public static boolean isAdmin(HttpSession session) {
+        LoginUserResponseDTO loginUser = (LoginUserResponseDTO) session.getAttribute(LOGIN_KEY);
+        return loginUser.getAuth().equals("ADMIN");
+    }
+    
+    // 내가 쓴 게시물인지 확인해주는 메서드
+    // 로그인한 사람 계정명과 실제 게시물 계정명
 }
