@@ -18,6 +18,7 @@ public class BoardListResponseDTO {
     private final String date; // 날짜패턴 yyyy-MM-dd HH:mm
     private final int viewCount;
     private final int likeCount;
+    private final String account;
 
     public BoardListResponseDTO(Board board) {
         this.boardNo = board.getBoardNo();
@@ -26,6 +27,7 @@ public class BoardListResponseDTO {
         this.date = makePrettierDateString(board.getRegDateTime());
         this.viewCount = board.getViewCount();
         this.likeCount = board.getLikeCount();
+        this.account = board.getAccount();
     }
 
     static String makePrettierDateString(LocalDateTime regDateTime) {
