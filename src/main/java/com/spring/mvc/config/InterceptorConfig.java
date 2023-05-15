@@ -15,6 +15,7 @@ public class InterceptorConfig
 
     private final BoardInterceptor boardInterceptor;
     private final AfterLoginInterceptor afterLoginInterceptor;
+    private final AutoLoginInterceptor autoLoginInterceptor;
     
     // 인터셉터 설정 등록
 
@@ -29,6 +30,11 @@ public class InterceptorConfig
         // 로그인 후처리 인터셉터 설정
         registry.addInterceptor(afterLoginInterceptor)
                 .addPathPatterns("/members/sign-in", "/members/sign-up")
+                ;
+
+        // 자동 로그인 인터셉터 설정
+        registry.addInterceptor(autoLoginInterceptor)
+                .addPathPatterns("/**") // 사용자가 어디로 들어올지 모르니 모든 경로를 추가
                 ;
     }
 }
