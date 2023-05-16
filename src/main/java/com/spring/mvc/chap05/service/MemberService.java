@@ -31,13 +31,17 @@ public class MemberService {
     private final PasswordEncoder encoder;
 
     // 회원가입 처리 서비스
-    public boolean join(SignUpRequestDTO dto) {
+    public boolean join(
+            final SignUpRequestDTO dto,
+            final String savePath
+    ) {
         // dto 를 entity 로 변환
         Member member = Member.builder()
                 .account(dto.getAccount())
                 .email(dto.getEmail())
                 .name(dto.getName())
                 .password(encoder.encode(dto.getPassword()))
+                .profileImage(savePath)
                 .build();
 
         // 매퍼에게 회원정보 전달해서 저장명령
@@ -111,6 +115,7 @@ public class MemberService {
                 .nickName(member.getName())
                 .email(member.getEmail())
                 .auth(member.getAuth().toString()) // getAuth 가 이늄이라 toString 필수
+                .profile(member.getProfileImage())
                 .build();
         // 그 정보를 세션에 저장
         session.setAttribute(LoginUtil.LOGIN_KEY, dto); // 로그인 키에 로그인한 사람의 정보가 들어간다.
