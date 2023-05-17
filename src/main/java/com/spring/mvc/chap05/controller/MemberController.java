@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,8 +50,16 @@ public class MemberController {
         log.info("/members/sign-up POST ! - {}", dto);
         log.info("프로필 사진 이름: {}", dto.getProfileImage().getOriginalFilename());
 
-        // 실제 로컬 스토리지에 파일을 업로드하는 로직
-        String savePath = FileUtil.uploadFile(dto.getProfileImage(), rootPath);
+        MultipartFile profileImage = dto.getProfileImage();
+        log.info("프로필사진 이름: {}", profileImage.getOriginalFilename());
+
+        String savePath = null;
+
+        if (!profileImage.isEmpty()) {
+            // 실제 로컬 스토리지에 파일을 업로드하는 로직
+            savePath = FileUtil.uploadFile(dto.getProfileImage(), rootPath);
+        }
+
         boolean flag = memberService.join(dto, savePath);
 
         // 회원가입 후 로그인창으로 이동

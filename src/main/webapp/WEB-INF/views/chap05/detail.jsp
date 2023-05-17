@@ -23,6 +23,26 @@
             background: #888 !important;
             color: #fff !important;
         }
+
+        /* 댓글 프로필 */
+        .profile-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 10px auto;
+        }
+        .profile-box img {
+            width: 100%;
+        }
+
+        .reply-profile {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+
+        }
     </style>
 </head>
 
@@ -64,9 +84,21 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
+
+                                <div class="profile-box">
+                                    <c:choose>
+                                        <c:when test="${login.profile != null}">
+                                            <img src="/local${login.profile}" alt="프사">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <img src="/assets/img/anonymous.jpg" alt="프사">
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+
                                 <label for="newReplyWriter" hidden>댓글 작성자</label>
                                 <input id="newReplyWriter" name="replyWriter" type="text"
-                                       value="${loginUser.name}" class="form-control" placeholder="작성자 이름"
+                                       value="${login.nickName}" class="form-control" placeholder="작성자 이름"
                                        style="margin-bottom: 6px;">
                                 <button id="replyAddBtn" type="button"
                                         class="btn btn-dark form-control">등록</button>
@@ -133,6 +165,35 @@
         </div>
     </div>
 
+    <c:if test="${empty login}">
+        <a href="/members/sign-in">댓글은 로그인 후 작성 가능합니다.</a>
+    </c:if>
+
+    <c:if test="${not empty login}">
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="form-group">
+                    <label for="newReplyText" hidden>댓글 내용</label>
+                    <textarea rows="3" id="newReplyText" name="replyText" class="form-control"
+                              placeholder="댓글을 입력해주세요."></textarea>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="newReplyWriter" hidden>댓글 작성자</label>
+                    <input id="newReplyWriter" name="replyWriter" type="text"
+                           class="form-control" placeholder="작성자 이름"
+                           style="margin-bottom: 6px;" value="${login.nickName}" readonly>
+                    <button id="replyAddBtn" type="button"
+                            class="btn btn-dark form-control">등록</button>
+                </div>
+            </div>
+        </div>
+    </c:if>
+</div>
+</div> <!-- end reply write -->
+
     <!-- end replyModifyModal -->
 </div>
 
@@ -143,6 +204,10 @@
 
     // 댓글 요청 URI
     const URL = '/api/v1/replies';
+
+    // 로그인한 회원 계정명
+    const currentAccount = '${login.account}';
+    const auth = '${login.auth}';
 
     // 페이지 렌더링 함수
     function renderPage({
@@ -214,10 +279,15 @@
         } else {
             for (let rep of replies) {
 
-                const {rno, writer, text, regDate} = rep;
+                const {rno, writer, text, regDate, account: replyWriter, profile} = rep;
                 tag += "<div id='replyContent' class='card-body' data-replyId='" + rno + "'>" +
                     "    <div class='row user-block'>" +
                     "       <span class='col-md-3'>" +
+
+                        (profile
+                        ? `<img class='reply-profile' src='/local\${profile}' alt='profile'>`
+                        : `<img class='reply-profile' src='/assets/img/anonymous.jpg' alt='profile'>`) +
+
                     "         <b>" + writer + "</b>" +
                     "       </span>" +
                     "       <span class='offset-md-6 col-md-3 text-right'><b>" + regDate +
@@ -227,11 +297,11 @@
                     "       <div class='col-md-6'>" + text + "</div>" +
                     "       <div class='offset-md-2 col-md-4 text-right'>";
 
-                // if (currentAccount === rep.account || auth === 'ADMIN') {
-                tag +=
-                    "         <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;" +
-                    "         <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>"; // rest api 에서는
-                // }
+                if (currentAccount === replyWriter || auth === 'ADMIN') {
+                    tag +=
+                        "         <a id='replyModBtn' class='btn btn-sm btn-outline-dark' data-bs-toggle='modal' data-bs-target='#replyModifyModal'>수정</a>&nbsp;" +
+                        "         <a id='replyDelBtn' class='btn btn-sm btn-outline-dark' href='#'>삭제</a>"; // rest api 에서는
+                }
                 tag += "       </div>" +
                     "    </div>" +
                     " </div>";

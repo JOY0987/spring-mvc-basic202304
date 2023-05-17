@@ -127,5 +127,4 @@ public class BoardController {
         return "redirect:/board/detail?bno=" + no;
     }
 
-    // TODO : 댓글기능 만들어보기..도ㅣ면...
 }

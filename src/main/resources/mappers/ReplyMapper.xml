@@ -7,9 +7,9 @@
 
     <insert id="save">
         INSERT INTO tbl_reply
-            (reply_text, reply_writer, board_no)
+            (reply_text, reply_writer, board_no, account)
         VALUES
-            (#{replyText}, #{replyWriter}, #{boardNo})
+            (#{replyText}, #{replyWriter}, #{boardNo}, #{account})
     </insert>
 
     <update id="modify">
@@ -26,16 +26,19 @@
     <select id="findOne" resultType="reply"> -- 단일 컬럼을 리턴하는 경우에는 기본데이터타입 사용가능
         SELECT
             reply_no, reply_text, reply_writer
-            , reply_date, board_no
+            , reply_date, board_no, account
         FROM tbl_reply
         WHERE reply_no = #{replyNo}
     </select>
 
     <select id="findAll" resultType="reply">
     SELECT
-        reply_no, reply_text, reply_writer
-         , reply_date, board_no
-    FROM tbl_reply
+        A.reply_no, A.reply_text, A.reply_writer
+         , A.reply_date, A.board_no, A.account
+         , B.profile_image AS profileImage
+    FROM tbl_reply A
+    JOIN tbl_member B
+    ON A.account = B.account
     WHERE board_no = #{bn}
     ORDER BY reply_no
     LIMIT #{p.pageStart}, #{p.amount}

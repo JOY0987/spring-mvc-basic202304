@@ -118,6 +118,7 @@ public class MemberService {
                 .profile(member.getProfileImage())
                 .build();
         // 그 정보를 세션에 저장
+        // "login" 에 dto 를 담아서 jsp 로 보내기
         session.setAttribute(LoginUtil.LOGIN_KEY, dto); // 로그인 키에 로그인한 사람의 정보가 들어간다.
         // 세션의 수명을 설정
         session.setMaxInactiveInterval(60 * 60); // 1시간 후 펑 (기본 30분)

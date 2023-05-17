@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 import static org.springframework.http.ResponseEntity.*;
@@ -48,7 +49,8 @@ public class ReplyController {
     @PostMapping
     public ResponseEntity<?> create(
             // 요청 메세지 바디에 JSON 으로 보내주세요! (form 태그로 주면 웹에서 보내는 것만 저장 가능하므로)
-           @Validated @RequestBody ReplyPostRequestDTO dto
+           @Validated @RequestBody ReplyPostRequestDTO dto,
+            HttpSession session
             , BindingResult result // 검증 결과를 가진 객체
     ) {
         // 입력값 검증에 걸리면 4xx 상태코드 리턴
@@ -64,7 +66,7 @@ public class ReplyController {
         // 서비스에 비즈니스 로직 처리 위임
         try {
             // 댓글 등록이 끝나면 갱신된 댓글 리스트 전달
-            ReplyListResponseDTO responseDTO = replyService.register(dto);
+            ReplyListResponseDTO responseDTO = replyService.register(dto, session);
             // 성공시 클라이언트에 응답하기
             return ResponseEntity.ok().body(responseDTO);
         } catch (Exception e) {
