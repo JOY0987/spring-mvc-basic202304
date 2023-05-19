@@ -16,7 +16,7 @@
                 <img src="/assets/img/anonymous.jpg" alt="프로필 사진">
             </c:if>
             <c:if test="${login != null}">
-                <img src="/local${login.profile}" alt="프로필 사진">
+                <img src="${login.profile}" alt="프로필 사진">
             </c:if>
         </div>
 

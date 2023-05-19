@@ -1,5 +1,6 @@
 package com.spring.mvc.chap05.dto.request;
 
+import com.spring.mvc.chap05.entity.LoginMethod;
 import com.spring.mvc.chap05.entity.Member;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,4 +29,6 @@ public class SignUpRequestDTO {
     private String email;
 
     private MultipartFile profileImage;  // 프로필 이미지 파일 (DTO)
+
+    private LoginMethod loginMethod;
 }

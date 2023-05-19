@@ -88,7 +88,7 @@
                                 <div class="profile-box">
                                     <c:choose>
                                         <c:when test="${login.profile != null}">
-                                            <img src="/local${login.profile}" alt="프사">
+                                            <img src="${login.profile}" alt="프사">
                                         </c:when>
                                         <c:otherwise>
                                             <img src="/assets/img/anonymous.jpg" alt="프사">
@@ -285,7 +285,7 @@
                     "       <span class='col-md-3'>" +
 
                         (profile
-                        ? `<img class='reply-profile' src='/local\${profile}' alt='profile'>`
+                        ? `<img class='reply-profile' src='\${profile}' alt='profile'>`
                         : `<img class='reply-profile' src='/assets/img/anonymous.jpg' alt='profile'>`) +
 
                     "         <b>" + writer + "</b>" +
