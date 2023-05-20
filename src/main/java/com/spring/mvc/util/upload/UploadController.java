@@ -35,7 +35,7 @@ public class UploadController {
         log.info("file-type: {}", file.getContentType());
 
         // 첨부파일을 스토리지에 저장
-        // 1. 루트 디렉토리 생성
+        // 1. 루트 디렉토리 생성 -> 루트 폴더가 없을 시 생성하도록 하는 코드 필수!
         File root = new File(rootPath);
         if (!root.exists()) root.mkdirs(); // 경로에 있는 모든 폴더 생성
 
